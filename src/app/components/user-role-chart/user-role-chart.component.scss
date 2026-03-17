@@ -1,0 +1,180 @@
+.chart-card {
+  display: grid;
+  gap: 18px;
+  min-height: 100%;
+  min-width: 0;
+  align-content: start;
+}
+
+.chart-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #1c4980;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h3 {
+  margin: 0;
+  color: #383838;
+  font-size: 1.5rem;
+}
+
+p {
+  margin: 0;
+  color: rgba(56, 56, 56, 0.72);
+}
+
+.chart-shell {
+  position: relative;
+  width: min(100%, 450px);
+  min-width: 0;
+  height: 200px;
+  margin-inline: 0 auto;
+  margin-top: -4px;
+  padding: 8px 10px 4px 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f8f9fb;
+}
+
+.chart-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: rgba(248, 249, 251, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+canvas {
+  width: 100%;
+  height: 200px;
+  max-width: 100%;
+  display: block;
+  animation: fade-in 0.35s ease;
+}
+
+.role-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.count-tile {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f8f9fb;
+}
+
+.count-label {
+  color: rgba(56, 56, 56, 0.68);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.count-value {
+  color: #383838;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.count-tile.admin {
+  box-shadow: inset 0 0 0 1px rgba(28, 73, 128, 0.1);
+}
+
+.count-tile.editor {
+  box-shadow: inset 0 0 0 1px rgba(75, 125, 183, 0.12);
+}
+
+.count-tile.viewer {
+  box-shadow: inset 0 0 0 1px rgba(56, 56, 56, 0.08);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(28, 73, 128, 0.18);
+  border-top-color: #1c4980;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@media (max-width: 980px) {
+  .chart-card {
+    gap: 20px;
+  }
+
+  .chart-shell,
+  canvas {
+    width: min(100%, 400px);
+    height: 200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .chart-shell,
+  canvas {
+    width: min(100%, 390px);
+    height: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .role-counts {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-shell,
+  canvas {
+    width: min(100%, 320px);
+    height: 200px;
+  }
+}
+
+@media (max-width: 420px) {
+  .chart-card {
+    gap: 16px;
+  }
+
+  .chart-shell,
+  canvas {
+    width: 100%;
+    height: 200px;
+  }
+
+  .chart-loading {
+    font-size: 0.95rem;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

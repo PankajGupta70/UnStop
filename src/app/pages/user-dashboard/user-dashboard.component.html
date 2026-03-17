@@ -1,0 +1,108 @@
+@let allUsers = users$ | async;
+@let view = paginatedUsersView$ | async;
+
+<section class="dashboard-shell">
+  <header class="hero-card">
+    <div class="hero-copy">
+      <p class="eyebrow">Operations Dashboard</p>
+      <h1>User Dashboard</h1>
+      <p class="hero-text">
+        Manage your team, watch role balance in real time, and add new users through a
+        lightweight lazy-loaded form.
+      </p>
+    </div>
+
+    <div class="hero-chart">
+      @defer (on idle) {
+        <app-user-role-chart [users]="allUsers ?? []" />
+      } @placeholder {
+        <div class="panel-placeholder">Preparing chart module...</div>
+      }
+    </div>
+  </header>
+
+  <section class="panel table-panel">
+    <div class="panel-toolbar">
+      <div class="panel-heading">
+        <p class="eyebrow">Team Directory</p>
+        <h2>Users</h2>
+      </div>
+
+      <div class="panel-controls">
+        <label class="search-field">
+          <span class="sr-only">Search users</span>
+          <input
+            type="search"
+            [formControl]="searchControl"
+            placeholder="Filter by name, email, or role"
+          />
+        </label>
+        <button type="button" class="primary-button" (click)="openUserForm()">Add User</button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of view?.users ?? []; track user.email) {
+            <tr>
+              <td data-label="Name">{{ user.name }}</td>
+              <td data-label="Email">{{ user.email }}</td>
+              <td data-label="Role">
+                <span class="role-pill" [ngClass]="user.role.toLowerCase()">{{ user.role }}</span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3" class="empty-state">No users match the current filter.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-bar">
+      <p class="page-summary">
+        Showing {{ view?.startItem ?? 0 }}-{{ view?.endItem ?? 0 }} of
+        {{ view?.totalItems ?? 0 }}
+      </p>
+
+      <div class="pagination-actions">
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="(view?.currentPage ?? 1) <= 1"
+          (click)="goToPreviousPage()"
+        >
+          Previous
+        </button>
+        <span class="page-indicator">
+          Page {{ view?.currentPage ?? 1 }} of {{ view?.totalPages ?? 1 }}
+        </span>
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="(view?.currentPage ?? 1) >= (view?.totalPages ?? 1)"
+          (click)="goToNextPage(view?.totalPages ?? 1)"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </section>
+
+  @if (isFormOpen) {
+    @defer (when isFormOpen) {
+      <app-user-form (submitted)="addUser($event)" (closed)="closeUserForm()" />
+    } @placeholder {
+      <div class="modal-loader">Loading form...</div>
+    }
+  }
+</section>

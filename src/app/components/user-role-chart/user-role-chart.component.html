@@ -1,0 +1,14 @@
+<div class="chart-card">
+  <div class="chart-copy">
+    <p class="eyebrow">Role Distribution</p>
+  </div>
+
+  <div class="chart-shell">
+    @if (isLoading) {
+      <div class="chart-loading" aria-hidden="true">
+        <span class="spinner"></span>
+      </div>
+    }
+    <canvas #chartCanvas aria-label="Pie chart showing user role distribution"></canvas>
+  </div>
+</div>

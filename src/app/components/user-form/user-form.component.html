@@ -1,0 +1,53 @@
+<div class="modal-backdrop" (click)="close()">
+  <section
+    class="modal-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="add-user-title"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">User Management</p>
+        <h2 id="add-user-title">Add a new user</h2>
+      </div>
+      <button type="button" class="icon-button" aria-label="Close form" (click)="close()">x</button>
+    </div>
+
+    <form class="user-form" [formGroup]="userForm" (ngSubmit)="save()">
+      <label class="field">
+        <span>Name</span>
+        <input type="text" formControlName="name" placeholder="Enter full name" />
+        @if (hasError('name')) {
+          <small>Name is required and should be at least 2 characters long.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="Enter email address" />
+        @if (hasError('email')) {
+          <small>Please enter a valid email address.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Role</span>
+        <select formControlName="role">
+          <option value="">Select a role</option>
+          @for (role of roles; track role) {
+            <option [value]="role">{{ role }}</option>
+          }
+        </select>
+        @if (hasError('role')) {
+          <small>Please choose a role for the user.</small>
+        }
+      </label>
+
+      <div class="actions">
+        <button type="button" class="secondary-button" (click)="close()">Cancel</button>
+        <button type="submit" class="primary-button">Save User</button>
+      </div>
+    </form>
+  </section>
+</div>

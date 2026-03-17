@@ -13,11 +13,7 @@
     </div>
 
     <div class="hero-chart">
-      @defer (on idle) {
-        <app-user-role-chart [users]="allUsers ?? []" />
-      } @placeholder {
-        <div class="panel-placeholder">Preparing chart module...</div>
-      }
+      <app-user-role-chart [users]="allUsers ?? []" />
     </div>
   </header>
 
